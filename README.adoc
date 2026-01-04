@@ -1,0 +1,286 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025 Hyperpolymath
+
+= ReScript Full Stack
+:toc:
+:toc-placement: preamble
+:icons: font
+:source-highlighter: rouge
+
+**A complete map of the ReScript ecosystem across all stack layers.**
+
+This repository serves as an organizing framework for building full-stack applications entirely in ReScript, with smooth seams between layers and the ability to operate standalone or as swap-in components.
+
+== Vision
+
+[quote]
+ReScript with authority for all layers—seams smoothed, sealed, and shining.
+
+The goal is a coherent ecosystem where:
+
+* Every layer speaks ReScript (or has type-safe FFI)
+* Components work standalone OR as part of larger stacks
+* ABIs/FFIs are well-defined for interop with other ecosystems
+* Coverage gaps are visible and prioritized
+
+== Stack Architecture
+
+[source,text]
+----
+┌─────────────────────────────────────────────────────────────────────┐
+│                           PRESENTATION                               │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │  rescript-  │  │   rescript- │  │   @rescript │  │    Tauri    │ │
+│  │     tea     │  │     jsx     │  │    /react   │  │   (Rust)    │ │
+│  │  (TEA/Elm)  │  │    (JSX)    │  │   (React)   │  │  (Mobile)   │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+├─────────────────────────────────────────────────────────────────────┤
+│                             ROUTING                                  │
+│  ┌─────────────────────────────────────────────────────────────────┐│
+│  │                     cadre-tea-router                            ││
+│  │  URL parsing • Query params • Route guards • State sync         ││
+│  └─────────────────────────────────────────────────────────────────┘│
+├─────────────────────────────────────────────────────────────────────┤
+│                          STATE & DATA                                │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │  rescript-  │  │   rescript- │  │   rescript- │  │   rescript- │ │
+│  │    json     │  │    schema   │  │    store    │  │   indexeddb │ │
+│  │  (Parsing)  │  │ (Validation)│  │   (State)   │  │  (Browser)  │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+├─────────────────────────────────────────────────────────────────────┤
+│                           RUNTIME                                    │
+│  ┌─────────────────────────────────────────────────────────────────┐│
+│  │                   rescript-wasm-runtime                         ││
+│  │  Deno/Bun bindings • SharedMemory • DAG analysis • HTTP server  ││
+│  └─────────────────────────────────────────────────────────────────┘│
+├─────────────────────────────────────────────────────────────────────┤
+│                         COMPUTE (WASM)                               │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │    WASM     │  │   Shared    │  │  Dependency │  │    Code     │ │
+│  │   Modules   │  │   Memory    │  │    Graph    │  │Fingerprint  │ │
+│  │  (Rust→RS)  │  │ (Zero-copy) │  │    (DAG)    │  │  (Analysis) │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+├─────────────────────────────────────────────────────────────────────┤
+│                          NETWORK/API                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
+│  │     http    │  │   graphql   │  │  websocket  │  │     grpc    │ │
+│  │   (Fetch)   │  │  (Client)   │  │   (RT)      │  │  (Binary)   │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+├─────────────────────────────────────────────────────────────────────┤
+│                       PERSISTENCE/STORAGE                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
+│  │   postgres  │  │    sqlite   │  │     s3      │  │    redis    │ │
+│  │    (SQL)    │  │   (Embed)   │  │  (Object)   │  │   (Cache)   │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+├─────────────────────────────────────────────────────────────────────┤
+│                        INFRASTRUCTURE                                │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
+│  │    docker   │  │     k8s     │  │   terraform │  │    pulumi   │ │
+│  │ (Container) │  │  (Orchestr) │  │    (IaC)    │  │    (IaC)    │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
+└─────────────────────────────────────────────────────────────────────┘
+----
+
+== Coverage Status
+
+=== ✅ Hyperpolymath Components (Ours)
+
+[cols="2,3,1,2"]
+|===
+| Component | Description | Status | Link
+
+| **rescript-tea**
+| TEA (Elm Architecture) for ReScript with Layout engine and Animation subscriptions
+| ✅ Active
+| https://github.com/hyperpolymath/rescript-tea[GitHub]
+
+| **cadre-tea-router**
+| TEA-integrated routing with query params, state sync, and route guards
+| ✅ Active
+| https://github.com/hyperpolymath/cadre-tea-router[GitHub]
+
+| **rescript-wasm-runtime**
+| Deno/Bun runtime with SharedMemory zero-copy and DAG dependency analysis
+| ✅ Active
+| https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
+|===
+
+=== 🔵 Community Components (Third-Party)
+
+[cols="2,3,1,2"]
+|===
+| Component | Description | Status | Link
+
+| **@rescript/react**
+| Official React bindings for ReScript
+| ✅ Stable
+| https://github.com/rescript-lang/rescript-react[GitHub]
+
+| **@rescript/core**
+| Standard library for ReScript
+| ✅ Stable
+| https://github.com/rescript-lang/rescript-core[GitHub]
+
+| **rescript-webapi**
+| Browser Web API bindings
+| ✅ Stable
+| https://github.com/TheSpyder/rescript-webapi[GitHub]
+
+| **rescript-json**
+| JSON encoding/decoding
+| ✅ Stable
+| https://github.com/glennsl/rescript-json[GitHub]
+
+| **rescript-fetch**
+| Fetch API bindings
+| ✅ Stable
+| https://github.com/ryyppy/rescript-fetch[GitHub]
+
+| **rescript-promise**
+| Promise utilities
+| ✅ Stable
+| https://github.com/ryyppy/rescript-promise[GitHub]
+
+| **rescript-nodejs**
+| Node.js bindings (legacy, prefer Deno)
+| ⚠️ Maintained
+| https://github.com/TheSpyder/rescript-nodejs[GitHub]
+
+| **rescript-bun**
+| Bun runtime bindings
+| 🔵 Community
+| https://github.com/zth/rescript-bun[GitHub]
+
+| **rescript-relay**
+| Relay GraphQL client
+| ✅ Stable
+| https://github.com/zth/rescript-relay[GitHub]
+|===
+
+=== ⬜ Gaps (Needed)
+
+[cols="2,3,1"]
+|===
+| Component | Need | Priority
+
+| **rescript-postgres**
+| Type-safe PostgreSQL client
+| High
+
+| **rescript-sqlite**
+| Embedded SQLite bindings
+| Medium
+
+| **rescript-grpc**
+| gRPC client/server
+| Medium
+
+| **rescript-redis**
+| Redis client bindings
+| Medium
+
+| **rescript-s3**
+| S3/object storage client
+| Low
+
+| **rescript-docker**
+| Docker API bindings
+| Low
+
+| **rescript-k8s**
+| Kubernetes client
+| Low
+
+| **rescript-terraform**
+| Terraform CDK bindings
+| Low
+|===
+
+== ABI/FFI Strategy
+
+=== JavaScript Interop (Primary)
+
+ReScript compiles to JavaScript, so JS interop is native:
+
+[source,rescript]
+----
+// Direct binding to any JS library
+@module("some-js-lib") external doThing: string => unit = "doThing"
+----
+
+=== WASM Interop (High Performance)
+
+For compute-heavy operations, use SharedArrayBuffer for zero-copy:
+
+[source,rescript]
+----
+// See rescript-wasm-runtime/src/SharedMemory.res
+let pool = SharedMemory.createPool()
+let offset = SharedMemory.writeCommitHistory(pool, commits)
+// Pass pool.buffer directly to WASM - no serialization
+----
+
+=== Rust Interop (Systems)
+
+For systems programming, use wasm-bindgen or direct FFI:
+
+[source,rust]
+----
+// Rust side - compile to WASM
+#[wasm_bindgen]
+pub fn analyze_dependencies(buffer: &[u8]) -> JsValue { ... }
+----
+
+=== Native Interop (Mobile/Desktop)
+
+Use Tauri 2.0+ for mobile/desktop with Rust backend:
+
+[source,rescript]
+----
+// ReScript frontend talks to Rust backend via Tauri IPC
+@module("@tauri-apps/api") external invoke: string => promise<'a> = "invoke"
+----
+
+== Swap-In/Out Design Principles
+
+Every component should follow these principles to work standalone OR integrated:
+
+1. **No Global State**: Components receive dependencies via props/config
+2. **Type Boundaries**: Export `.resi` interface files
+3. **Minimal Dependencies**: Each component should work with just `@rescript/core`
+4. **Config Over Convention**: Accept configuration, don't assume structure
+5. **Async-First**: All I/O operations return promises
+
+== Quick Start
+
+For a full-stack ReScript application:
+
+[source,bash]
+----
+# Frontend (TEA + Layout + Routing)
+npm install rescript @rescript/react
+npm install rescript-tea cadre-tea-router
+
+# Runtime (Deno)
+deno add @rescript/core
+# Clone rescript-wasm-runtime for server components
+
+# Or use the template (coming soon)
+npx create-rescript-fullstack my-app
+----
+
+== Related Repos
+
+* https://github.com/hyperpolymath/git-dispatcher[git-dispatcher] - Development philosophy docs
+* https://github.com/hyperpolymath/rhodium-standard-repositories[RSR] - Repository standards
+
+== Contributing
+
+See link:ROADMAP.adoc[ROADMAP.adoc] for priorities and how to contribute.
+
+== License
+
+AGPL-3.0-or-later

@@ -30,8 +30,8 @@ The goal is a coherent ecosystem where:
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                             PRESENTATION                                │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │  rescript-tea │ │  rescript-jsx │ │@rescript/react│ │    Tauri    │  │
-│  │   (TEA/Elm)   │ │     (JSX)     │ │    (React)    │ │   (Rust)    │  │
+│  │  rescript-tea │ │  rescript-jsx │ │@rescript/react│ │rescript-tauri│ │
+│  │   (TEA/Elm)   │ │     (JSX)     │ │    (React)    │ │  (Mobile)   │  │
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                               ROUTING                                   │
@@ -42,8 +42,8 @@ The goal is a coherent ecosystem where:
 ├─────────────────────────────────────────────────────────────────────────┤
 │                            STATE & DATA                                 │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │ rescript-json │ │rescript-schema│ │ rescript-store│ │  indexeddb  │  │
-│  │   (Parsing)   │ │ (Validation)  │ │    (State)    │ │  (Browser)  │  │
+│  │ rescript-json │ │rescript-schema│ │  rescript-env │ │  indexeddb  │  │
+│  │   (Parsing)   │ │ (Validation)  │ │   (Config)    │ │  (Browser)  │  │
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                              RUNTIME                                    │
@@ -60,23 +60,19 @@ The goal is a coherent ecosystem where:
 ├─────────────────────────────────────────────────────────────────────────┤
 │                            NETWORK/API                                  │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │ rescript-http │ │rescript-graphql│ │  rescript-ws │ │rescript-grpc│  │
-│  │    (Fetch)    │ │    (Client)   │ │     (RT)      │ │  (Binary)   │  │
+│  │rescript-http  │ │rescript-graphql│ │ rescript-ws  │ │ rescript-sse│  │
+│  │(Fetch/Server) │ │    (Client)   │ │  (WebSocket)  │ │   (Events)  │  │
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                         PERSISTENCE/STORAGE                             │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │    postgres   │ │     sqlite    │ │       s3      │ │    redis    │  │
+│  │rescript-postgres│ │rescript-sqlite│ │  rescript-s3 │ │rescript-redis│ │
 │  │     (SQL)     │ │    (Embed)    │ │   (Object)    │ │   (Cache)   │  │
-│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
-├─────────────────────────────────────────────────────────────────────────┤
-│                          INFRASTRUCTURE                                 │
-│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │     docker    │ │      k8s      │ │   terraform   │ │    pulumi   │  │
-│  │  (Container)  │ │  (Orchestr)   │ │     (IaC)     │ │    (IaC)    │  │
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 └─────────────────────────────────────────────────────────────────────────┘
 ----
+
+NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally excluded. Use existing CLI tools via `Deno.Command` or TypeScript CDK libraries instead. See link:ROADMAP.adoc#wont-deprecated-or-not-recommended[ROADMAP § WON'T] for rationale.
 
 == Coverage Status
 
@@ -102,7 +98,7 @@ The goal is a coherent ecosystem where:
 |https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
 |===
 
-=== 🔵 Community Components (Third-Party)
+=== 🔵 Community Components (Recommended)
 
 [cols="2,3,1,2",options="header"]
 |===
@@ -117,6 +113,11 @@ The goal is a coherent ecosystem where:
 |Standard library for ReScript
 |✅ Stable
 |https://github.com/rescript-lang/rescript-core[GitHub]
+
+|**rescript-schema**
+|Runtime type validation with excellent ergonomics. _Recommended for all API boundaries._
+|✅ Stable
+|https://github.com/DZakh/rescript-schema[GitHub]
 
 |**rescript-webapi**
 |Browser Web API bindings
@@ -138,20 +139,26 @@ The goal is a coherent ecosystem where:
 |✅ Stable
 |https://github.com/ryyppy/rescript-promise[GitHub]
 
-|**rescript-nodejs**
-|Node.js bindings. _Deprecated: Node.js lacks Deno's security model, native TypeScript support, and modern module resolution. Migration to Deno is strongly recommended._
-|⚠️ Legacy
-|https://github.com/TheSpyder/rescript-nodejs[GitHub]
+|**rescript-relay**
+|Relay GraphQL client bindings
+|✅ Stable
+|https://github.com/zth/rescript-relay[GitHub]
 
 |**rescript-bun**
 |Bun runtime bindings
 |🔵 Community
 |https://github.com/zth/rescript-bun[GitHub]
+|===
 
-|**rescript-relay**
-|Relay GraphQL client bindings
-|✅ Stable
-|https://github.com/zth/rescript-relay[GitHub]
+=== ⚠️ Legacy (Not Recommended)
+
+[cols="2,3,2",options="header"]
+|===
+|Component |Issue |Alternative
+
+|**rescript-nodejs**
+|Node.js lacks Deno's security model, native TypeScript support, and modern module resolution.
+|Migrate to Deno with rescript-wasm-runtime
 |===
 
 === 🔶 In Development
@@ -162,43 +169,53 @@ The goal is a coherent ecosystem where:
 
 |**rescript-postgres**
 |Type-safe PostgreSQL client with parameterised queries, connection pooling, and transaction support. ReScript FFI bindings to postgres.js (Porsager).
-|🔶 Planned
+|🔶 Code Complete
 |https://github.com/hyperpolymath/rescript-postgres[GitHub]
+
+|**rescript-http-server**
+|Thin wrapper around Deno.serve for type-safe HTTP servers. Standalone alternative to the HTTP in rescript-wasm-runtime.
+|🔶 Planned
+|_TBD_
 |===
 
-=== ⬜ Gaps (Required)
+=== ⬜ Gaps (Prioritised)
 
-[cols="2,3,1",options="header"]
+==== SHOULD (High Value)
+
+[cols="2,3",options="header"]
 |===
-|Component |Requirement |Priority
+|Component |Requirement
 
-|**rescript-sqlite**
-|Embedded SQLite bindings for local persistence
-|Medium
+|**rescript-websocket**
+|WebSocket client and server with reconnection, heartbeat, and channels
+
+|**rescript-redis**
+|Redis client for caching, sessions, and pub/sub
+
+|**rescript-env**
+|Type-safe environment variable parsing with validation
+
+|**rescript-tauri**
+|Tauri 2.0 bindings for mobile and desktop applications
+|===
+
+==== COULD (Future Consideration)
+
+[cols="2,3",options="header"]
+|===
+|Component |Requirement
+
+|**rescript-s3**
+|S3-compatible object storage client (AWS, Minio, R2)
 
 |**rescript-grpc**
 |gRPC client and server implementation
-|Medium
 
-|**rescript-redis**
-|Redis client bindings for caching and pub/sub
-|Medium
+|**rescript-sqlite**
+|Embedded SQLite bindings (primarily for Tauri apps)
 
-|**rescript-s3**
-|S3-compatible object storage client
-|Low
-
-|**rescript-docker**
-|Docker Engine API bindings
-|Low
-
-|**rescript-k8s**
-|Kubernetes API client
-|Low
-
-|**rescript-terraform**
-|Terraform CDK bindings for infrastructure as code
-|Low
+|**rescript-openapi**
+|Generate ReScript clients from OpenAPI specifications
 |===
 
 == ABI/FFI Strategy

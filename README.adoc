@@ -260,16 +260,18 @@ For a full-stack ReScript application:
 
 [source,bash]
 ----
-# Frontend (TEA + Layout + Routing)
-npm install rescript @rescript/react
-npm install rescript-tea cadre-tea-router
+# Frontend (TEA + Layout + Routing)*
+deno install rescript @rescript/react
+deno install rescript-tea cadre-tea-router
 
 # Runtime (Deno)
 deno add @rescript/core
 # Clone rescript-wasm-runtime for server components
 
 # Or use the template (coming soon)
-npx create-rescript-fullstack my-app
+deno create-rescript-fullstack my-app
+
+* you can use npm but it's crap
 ----
 
 == Related Repos
@@ -283,4 +285,4 @@ See link:ROADMAP.adoc[ROADMAP.adoc] for priorities and how to contribute.
 
 == License
 
-AGPL-3.0-or-later
+AGPL-3.0-or-later (legal) and Palimpsest 0.4 (encouraged) dual licence

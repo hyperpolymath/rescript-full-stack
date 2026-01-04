@@ -27,176 +27,170 @@ The goal is a coherent ecosystem where:
 
 [source,text]
 ----
-┌─────────────────────────────────────────────────────────────────────┐
-│                           PRESENTATION                               │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │  rescript-  │  │   rescript- │  │   @rescript │  │    Tauri    │ │
-│  │     tea     │  │     jsx     │  │    /react   │  │   (Rust)    │ │
-│  │  (TEA/Elm)  │  │    (JSX)    │  │   (React)   │  │  (Mobile)   │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-├─────────────────────────────────────────────────────────────────────┤
-│                             ROUTING                                  │
-│  ┌─────────────────────────────────────────────────────────────────┐│
-│  │                     cadre-tea-router                            ││
-│  │  URL parsing • Query params • Route guards • State sync         ││
-│  └─────────────────────────────────────────────────────────────────┘│
-├─────────────────────────────────────────────────────────────────────┤
-│                          STATE & DATA                                │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │  rescript-  │  │   rescript- │  │   rescript- │  │   rescript- │ │
-│  │    json     │  │    schema   │  │    store    │  │   indexeddb │ │
-│  │  (Parsing)  │  │ (Validation)│  │   (State)   │  │  (Browser)  │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-├─────────────────────────────────────────────────────────────────────┤
-│                           RUNTIME                                    │
-│  ┌─────────────────────────────────────────────────────────────────┐│
-│  │                   rescript-wasm-runtime                         ││
-│  │  Deno/Bun bindings • SharedMemory • DAG analysis • HTTP server  ││
-│  └─────────────────────────────────────────────────────────────────┘│
-├─────────────────────────────────────────────────────────────────────┤
-│                         COMPUTE (WASM)                               │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │    WASM     │  │   Shared    │  │  Dependency │  │    Code     │ │
-│  │   Modules   │  │   Memory    │  │    Graph    │  │Fingerprint  │ │
-│  │  (Rust→RS)  │  │ (Zero-copy) │  │    (DAG)    │  │  (Analysis) │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-├─────────────────────────────────────────────────────────────────────┤
-│                          NETWORK/API                                 │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
-│  │     http    │  │   graphql   │  │  websocket  │  │     grpc    │ │
-│  │   (Fetch)   │  │  (Client)   │  │   (RT)      │  │  (Binary)   │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-├─────────────────────────────────────────────────────────────────────┤
-│                       PERSISTENCE/STORAGE                            │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
-│  │   postgres  │  │    sqlite   │  │     s3      │  │    redis    │ │
-│  │    (SQL)    │  │   (Embed)   │  │  (Object)   │  │   (Cache)   │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-├─────────────────────────────────────────────────────────────────────┤
-│                        INFRASTRUCTURE                                │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
-│  │   rescript- │  │   rescript- │  │   rescript- │  │   rescript- │ │
-│  │    docker   │  │     k8s     │  │   terraform │  │    pulumi   │ │
-│  │ (Container) │  │  (Orchestr) │  │    (IaC)    │  │    (IaC)    │ │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                             PRESENTATION                                │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │  rescript-tea │ │  rescript-jsx │ │@rescript/react│ │    Tauri    │  │
+│  │   (TEA/Elm)   │ │     (JSX)     │ │    (React)    │ │   (Rust)    │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                               ROUTING                                   │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                       cadre-tea-router                            │  │
+│  │    URL parsing • Query params • Route guards • State sync         │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                            STATE & DATA                                 │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │ rescript-json │ │rescript-schema│ │ rescript-store│ │  indexeddb  │  │
+│  │   (Parsing)   │ │ (Validation)  │ │    (State)    │ │  (Browser)  │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                              RUNTIME                                    │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                     rescript-wasm-runtime                         │  │
+│  │   Deno/Bun bindings • SharedMemory • DAG analysis • HTTP server   │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                           COMPUTE (WASM)                                │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │  WASM Modules │ │ Shared Memory │ │   Dep Graph   │ │  Codeprint  │  │
+│  │   (Rust→RS)   │ │  (Zero-copy)  │ │     (DAG)     │ │  (Analysis) │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                            NETWORK/API                                  │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │ rescript-http │ │rescript-graphql│ │  rescript-ws │ │rescript-grpc│  │
+│  │    (Fetch)    │ │    (Client)   │ │     (RT)      │ │  (Binary)   │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                         PERSISTENCE/STORAGE                             │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │    postgres   │ │     sqlite    │ │       s3      │ │    redis    │  │
+│  │     (SQL)     │ │    (Embed)    │ │   (Object)    │ │   (Cache)   │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                          INFRASTRUCTURE                                 │
+│  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
+│  │     docker    │ │      k8s      │ │   terraform   │ │    pulumi   │  │
+│  │  (Container)  │ │  (Orchestr)   │ │     (IaC)     │ │    (IaC)    │  │
+│  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
+└─────────────────────────────────────────────────────────────────────────┘
 ----
 
 == Coverage Status
 
 === ✅ Hyperpolymath Components (Ours)
 
-[cols="2,3,1,2"]
+[cols="2,3,1,2",options="header"]
 |===
-| Component | Description | Status | Link
+|Component |Description |Status |Link
 
-| **rescript-tea**
-| TEA (Elm Architecture) for ReScript with Layout engine and Animation subscriptions
-| ✅ Active
-| https://github.com/hyperpolymath/rescript-tea[GitHub]
+|**rescript-tea**
+|TEA (Elm Architecture) for ReScript with layout engine and animation subscriptions
+|✅ Active
+|https://github.com/hyperpolymath/rescript-tea[GitHub]
 
-| **cadre-tea-router**
-| TEA-integrated routing with query params, state sync, and route guards
-| ✅ Active
-| https://github.com/hyperpolymath/cadre-tea-router[GitHub]
+|**cadre-tea-router**
+|TEA-integrated routing with query parameters, state synchronisation, and route guards
+|✅ Active
+|https://github.com/hyperpolymath/cadre-tea-router[GitHub]
 
-| **rescript-wasm-runtime**
-| Deno/Bun runtime with SharedMemory zero-copy and DAG dependency analysis
-| ✅ Active
-| https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
+|**rescript-wasm-runtime**
+|Deno/Bun runtime with SharedMemory zero-copy transfer and DAG dependency analysis
+|✅ Active
+|https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
 |===
 
 === 🔵 Community Components (Third-Party)
 
-[cols="2,3,1,2"]
+[cols="2,3,1,2",options="header"]
 |===
-| Component | Description | Status | Link
+|Component |Description |Status |Link
 
-| **@rescript/react**
-| Official React bindings for ReScript
-| ✅ Stable
-| https://github.com/rescript-lang/rescript-react[GitHub]
+|**@rescript/react**
+|Official React bindings for ReScript
+|✅ Stable
+|https://github.com/rescript-lang/rescript-react[GitHub]
 
-| **@rescript/core**
-| Standard library for ReScript
-| ✅ Stable
-| https://github.com/rescript-lang/rescript-core[GitHub]
+|**@rescript/core**
+|Standard library for ReScript
+|✅ Stable
+|https://github.com/rescript-lang/rescript-core[GitHub]
 
-| **rescript-webapi**
-| Browser Web API bindings
-| ✅ Stable
-| https://github.com/TheSpyder/rescript-webapi[GitHub]
+|**rescript-webapi**
+|Browser Web API bindings
+|✅ Stable
+|https://github.com/TheSpyder/rescript-webapi[GitHub]
 
-| **rescript-json**
-| JSON encoding/decoding
-| ✅ Stable
-| https://github.com/glennsl/rescript-json[GitHub]
+|**rescript-json**
+|JSON encoding and decoding utilities
+|✅ Stable
+|https://github.com/glennsl/rescript-json[GitHub]
 
-| **rescript-fetch**
-| Fetch API bindings
-| ✅ Stable
-| https://github.com/ryyppy/rescript-fetch[GitHub]
+|**rescript-fetch**
+|Fetch API bindings
+|✅ Stable
+|https://github.com/ryyppy/rescript-fetch[GitHub]
 
-| **rescript-promise**
-| Promise utilities
-| ✅ Stable
-| https://github.com/ryyppy/rescript-promise[GitHub]
+|**rescript-promise**
+|Promise utilities
+|✅ Stable
+|https://github.com/ryyppy/rescript-promise[GitHub]
 
-| **rescript-nodejs**
-| Node.js bindings (legacy, prefer Deno)
-| ⚠️ Maintained
-| https://github.com/TheSpyder/rescript-nodejs[GitHub]
+|**rescript-nodejs**
+|Node.js bindings. _Deprecated: Node.js lacks Deno's security model, native TypeScript support, and modern module resolution. Migration to Deno is strongly recommended._
+|⚠️ Legacy
+|https://github.com/TheSpyder/rescript-nodejs[GitHub]
 
-| **rescript-bun**
-| Bun runtime bindings
-| 🔵 Community
-| https://github.com/zth/rescript-bun[GitHub]
+|**rescript-bun**
+|Bun runtime bindings
+|🔵 Community
+|https://github.com/zth/rescript-bun[GitHub]
 
-| **rescript-relay**
-| Relay GraphQL client
-| ✅ Stable
-| https://github.com/zth/rescript-relay[GitHub]
+|**rescript-relay**
+|Relay GraphQL client bindings
+|✅ Stable
+|https://github.com/zth/rescript-relay[GitHub]
 |===
 
-=== ⬜ Gaps (Needed)
+=== ⬜ Gaps (Required)
 
-[cols="2,3,1"]
+[cols="2,3,1",options="header"]
 |===
-| Component | Need | Priority
+|Component |Requirement |Priority
 
-| **rescript-postgres**
-| Type-safe PostgreSQL client
-| High
+|**rescript-postgres**
+|Type-safe PostgreSQL client with parameterised queries
+|High
 
-| **rescript-sqlite**
-| Embedded SQLite bindings
-| Medium
+|**rescript-sqlite**
+|Embedded SQLite bindings for local persistence
+|Medium
 
-| **rescript-grpc**
-| gRPC client/server
-| Medium
+|**rescript-grpc**
+|gRPC client and server implementation
+|Medium
 
-| **rescript-redis**
-| Redis client bindings
-| Medium
+|**rescript-redis**
+|Redis client bindings for caching and pub/sub
+|Medium
 
-| **rescript-s3**
-| S3/object storage client
-| Low
+|**rescript-s3**
+|S3-compatible object storage client
+|Low
 
-| **rescript-docker**
-| Docker API bindings
-| Low
+|**rescript-docker**
+|Docker Engine API bindings
+|Low
 
-| **rescript-k8s**
-| Kubernetes client
-| Low
+|**rescript-k8s**
+|Kubernetes API client
+|Low
 
-| **rescript-terraform**
-| Terraform CDK bindings
-| Low
+|**rescript-terraform**
+|Terraform CDK bindings for infrastructure as code
+|Low
 |===
 
 == ABI/FFI Strategy
@@ -260,19 +254,33 @@ For a full-stack ReScript application:
 
 [source,bash]
 ----
-# Frontend (TEA + Layout + Routing)*
-deno install rescript @rescript/react
-deno install rescript-tea cadre-tea-router
+# Frontend (TEA + Layout + Routing)
+deno add npm:rescript npm:@rescript/react
+deno add npm:rescript-tea npm:cadre-tea-router
 
-# Runtime (Deno)
-deno add @rescript/core
+# Runtime (Deno with JSR packages)
+deno add jsr:@rescript/core
+
 # Clone rescript-wasm-runtime for server components
+git clone https://github.com/hyperpolymath/rescript-wasm-runtime
 
-# Or use the template (coming soon)
-deno create-rescript-fullstack my-app
-
-* you can use npm but it's crap
+# Template (coming soon)
+deno run -A npm:create-rescript-fullstack my-app
 ----
+
+=== A Note on Package Managers
+
+This project recommends **Deno** as the primary runtime and package manager. While npm remains technically compatible, its use is strongly discouraged for the following reasons:
+
+1. **Security Model**: npm's permissive execution model permits arbitrary code execution during installation. Deno's explicit permissions system (`--allow-read`, `--allow-net`, etc.) provides defence in depth.
+
+2. **Dependency Resolution**: npm's nested `node_modules` structure creates significant disk overhead and introduces phantom dependency risks. Deno's URL-based imports and global cache eliminate these concerns.
+
+3. **Native TypeScript**: Deno executes TypeScript directly without transpilation configuration, reducing toolchain complexity.
+
+4. **Standard Library**: Deno's standard library undergoes security review, whereas npm packages vary considerably in maintenance and security posture.
+
+For legacy Node.js projects requiring npm compatibility, ensure thorough dependency auditing and consider migration to Deno at the earliest opportunity.
 
 == Related Repos
 

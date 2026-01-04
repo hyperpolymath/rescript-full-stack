@@ -38,7 +38,7 @@ These components form the minimum viable full-stack:
 | ✅ Ours
 |===
 
-=== P1: Data Layer (Next)
+=== P1: Data Layer (Done ✅)
 
 Essential for any real application:
 
@@ -48,26 +48,26 @@ Essential for any real application:
 
 | **rescript-postgres**
 | PostgreSQL client
-| ⬜ Needed
-| Type-safe queries, connection pooling
+| ✅ Done
+| Type-safe queries, transactions, connection pooling
 
 | **rescript-schema**
 | Runtime validation
-| 🔵 Community exists
-| Evaluate https://github.com/DZakh/rescript-schema[rescript-schema]
+| ✅ Community (Sury)
+| https://github.com/DZakh/rescript-schema[rescript-schema] - excellent
 
 | **rescript-env**
 | Environment config
-| ⬜ Needed
-| Type-safe env vars, .env parsing
+| ✅ Done
+| Type-safe env vars, runtime detection
 
-| **rescript-jwt**
-| JWT handling
-| ⬜ Needed
-| Sign/verify, claims extraction
+| **rescript-poly-core**
+| Shared foundation
+| ✅ Done
+| Result, Async, Logger, Config, MCP utilities
 |===
 
-=== P2: Real-Time & API (High Value)
+=== P2: Real-Time & API (Done ✅)
 
 For interactive applications:
 
@@ -77,26 +77,26 @@ For interactive applications:
 
 | **rescript-websocket**
 | WebSocket client/server
-| ⬜ Needed
-| Reconnection, heartbeat, channels
+| ✅ Done
+| Client + Server with Deno native API
 
-| **rescript-sse**
-| Server-Sent Events
-| ⬜ Needed
-| For real-time dashboards
+| **rescript-http-server**
+| HTTP server
+| ✅ Done
+| Routing, middleware, response helpers
 
 | **rescript-graphql-client**
 | GraphQL client
-| 🔵 rescript-relay exists
-| Evaluate for non-Relay use cases
+| ✅ Community
+| rescript-relay for Relay, rescript-webapi Fetch for simple
 
-| **rescript-openapi**
-| OpenAPI code generation
-| ⬜ Needed
-| Generate clients from specs
+| **rescript-sse**
+| Server-Sent Events
+| ⬜ Gap
+| Lower priority - WebSocket covers most use cases
 |===
 
-=== P3: Infrastructure (Scale)
+=== P3: Infrastructure (Partial ✅)
 
 For production deployments:
 
@@ -106,23 +106,23 @@ For production deployments:
 
 | **rescript-redis**
 | Redis client
-| ⬜ Needed
-| Caching, pub/sub, sessions
+| ✅ Done
+| Full API + Streams + Sentinel + Cluster
 
 | **rescript-s3**
 | Object storage
-| ⬜ Needed
+| ⬜ Gap
 | S3-compatible (AWS, Minio, R2)
 
 | **rescript-queue**
 | Message queues
-| ⬜ Needed
-| Generic interface, Redis/SQS backends
+| ⚡ Via MCP
+| poly-queue-mcp for LLM, direct use Redis Streams
 
 | **rescript-metrics**
 | Observability
-| ⬜ Needed
-| Prometheus, OpenTelemetry
+| ⬜ Gap
+| Prometheus, OpenTelemetry - via poly-observability-mcp
 |===
 
 === P4: Mobile & Desktop (Expand)
@@ -265,9 +265,9 @@ If you want to contribute, here's where effort is most valuable:
 
 === Immediate Impact
 
-1. **rescript-postgres** - Unlocks all database-backed apps
-2. **rescript-websocket** - Unlocks real-time apps
-3. **rescript-env** - Makes deployment easier
+1. **rescript-tauri** - Unlocks mobile/desktop apps (ONLY remaining SHOULD priority)
+2. **rescript-s3** - Object storage for file-heavy applications
+3. **rescript-openapi** - Generate clients from OpenAPI specs
 
 === Documentation
 
@@ -319,56 +319,56 @@ All hyperpolymath components follow:
 
 No hard dates. Components are built demand-driven (see git-dispatcher/DEMAND-DRIVEN-DEVELOPMENT.adoc).
 
-**Rough order:**
+**Status:**
 
 1. ✅ Q1 2025: Foundation (done)
-2. 🔄 Q2 2025: Data layer (postgres, schema)
-3. 📋 Q3 2025: Real-time (websocket, sse)
-4. 📋 Q4 2025: Infrastructure (redis, s3)
-5. 📋 2026: Mobile/desktop (tauri)
+2. ✅ Q2 2025: Data layer (postgres, schema, env, poly-core)
+3. ✅ Q3 2025: Real-time (websocket, http-server)
+4. ✅ Q4 2025: Infrastructure (redis with Streams/Sentinel/Cluster)
+5. 📋 2026: Mobile/desktop (tauri) - NEXT PRIORITY
 
 == MoSCoW Prioritisation
 
-=== MUST (Critical for viability)
+=== MUST (Critical for viability) ✅ COMPLETE
 
 [cols="1,3,2"]
 |===
-|Component |Rationale |Effort
+|Component |Rationale |Status
 
 |**rescript-postgres**
-|Without database access, no server-side application is possible. This is the single highest-impact gap in the ecosystem.
-|Low (FFI to postgres.js)
+|Database access for server-side applications.
+|✅ Done
 
-|**rescript-schema**
-|Runtime validation is essential for API boundaries. DZakh's rescript-schema exists and is well-maintained—adopt rather than build.
-|None (use existing)
+|**rescript-schema (Sury)**
+|Runtime validation for API boundaries.
+|✅ Community (DZakh)
 
 |**rescript-http-server**
-|The rescript-wasm-runtime has HTTP, but a standalone Deno.serve wrapper would be cleaner for pure-ReScript servers.
-|Low (thin wrapper)
+|Standalone Deno.serve wrapper for pure-ReScript servers.
+|✅ Done
 |===
 
-=== SHOULD (High value, clear use cases)
+=== SHOULD (High value, clear use cases) ✅ MOSTLY COMPLETE
 
 [cols="1,3,2"]
 |===
-|Component |Rationale |Effort
+|Component |Rationale |Status
 
 |**rescript-websocket**
-|Real-time is table stakes for modern apps. Deno has native WebSocket—binding is straightforward.
-|Low
+|Real-time is table stakes for modern apps.
+|✅ Done
 
 |**rescript-redis**
-|Caching, sessions, pub/sub. Essential for horizontal scaling. Bind to Deno's redis client.
-|Low
+|Caching, sessions, pub/sub, Streams, Sentinel, Cluster.
+|✅ Done
 
 |**rescript-env**
-|Type-safe environment variables with validation. Small but prevents entire classes of deployment bugs.
-|Very Low
+|Type-safe environment variables with validation.
+|✅ Done
 
 |**rescript-tauri**
 |Mobile/desktop via Tauri 2.0. The only viable path to native without leaving ReScript.
-|Medium
+|⬜ Next Priority
 |===
 
 === COULD (Nice to have, future consideration)

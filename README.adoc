@@ -101,6 +101,31 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Type-safe static site generator in ReScript with ML-family type inference and npm compatibility
 |✅ Active
 |https://github.com/hyperpolymath/rescribe-ssg[GitHub]
+
+|**rescript-postgres**
+|Type-safe PostgreSQL client with parameterised queries, connection pooling, and transaction support
+|✅ Active
+|https://github.com/hyperpolymath/rescript-postgres[GitHub]
+
+|**rescript-http-server**
+|Type-safe HTTP server for Deno with routing, middleware, and response helpers
+|✅ Active
+|https://github.com/hyperpolymath/rescript-http-server[GitHub]
+
+|**rescript-websocket**
+|Type-safe WebSocket client and server with Deno's native WebSocket API
+|✅ Active
+|https://github.com/hyperpolymath/rescript-websocket[GitHub]
+
+|**rescript-redis**
+|Type-safe Redis client with strings, hashes, lists, sets, sorted sets, and pub/sub
+|✅ Active
+|https://github.com/hyperpolymath/rescript-redis[GitHub]
+
+|**rescript-env**
+|Type-safe environment variable access with runtime detection for Deno, Bun, and Node.js
+|✅ Active
+|https://github.com/hyperpolymath/rescript-env[GitHub]
 |===
 
 === 🔵 Community Components (Recommended)
@@ -166,23 +191,6 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Migrate to Deno with rescript-wasm-runtime
 |===
 
-=== 🔶 In Development
-
-[cols="2,3,1,2",options="header"]
-|===
-|Component |Description |Status |Link
-
-|**rescript-postgres**
-|Type-safe PostgreSQL client with parameterised queries, connection pooling, and transaction support. ReScript FFI bindings to postgres.js (Porsager).
-|🔶 Code Complete
-|https://github.com/hyperpolymath/rescript-postgres[GitHub]
-
-|**rescript-http-server**
-|Thin wrapper around Deno.serve for type-safe HTTP servers. Standalone alternative to the HTTP in rescript-wasm-runtime.
-|🔶 Planned
-|_TBD_
-|===
-
 === ⬜ Gaps (Prioritised)
 
 ==== SHOULD (High Value)
@@ -190,15 +198,6 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 [cols="2,3",options="header"]
 |===
 |Component |Requirement
-
-|**rescript-websocket**
-|WebSocket client and server with reconnection, heartbeat, and channels
-
-|**rescript-redis**
-|Redis client for caching, sessions, and pub/sub
-
-|**rescript-env**
-|Type-safe environment variable parsing with validation
 
 |**rescript-tauri**
 |Tauri 2.0 bindings for mobile and desktop applications

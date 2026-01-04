@@ -96,6 +96,11 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Deno/Bun runtime with SharedMemory zero-copy transfer and DAG dependency analysis
 |✅ Active
 |https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
+
+|**rescribe-ssg**
+|Type-safe static site generator in ReScript with ML-family type inference and npm compatibility
+|✅ Active
+|https://github.com/hyperpolymath/rescribe-ssg[GitHub]
 |===
 
 === 🔵 Community Components (Recommended)
@@ -307,8 +312,47 @@ This project recommends **Deno** as the primary runtime and package manager. Whi
 
 For legacy Node.js projects requiring npm compatibility, ensure thorough dependency auditing and consider migration to Deno at the earliest opportunity.
 
+== MCP Tooling (LLM Integration)
+
+The https://github.com/hyperpolymath/poly-mcps[poly-mcps] repository provides Model Context Protocol servers that complement this stack. While not ReScript-specific, they provide LLM-accessible tooling for common infrastructure tasks.
+
+=== Relevant MCP Servers
+
+[cols="2,3,2",options="header"]
+|===
+|Server |Purpose |Replaces Need For
+
+|**poly-db-mcp**
+|Unified access to 20+ databases (PostgreSQL, Redis, MongoDB, etc.)
+|Direct bindings for LLM workflows
+
+|**poly-secret-mcp**
+|Secrets management across providers
+|rescript-env for LLM-driven config
+
+|**poly-queue-mcp**
+|Message queue operations
+|Direct queue bindings
+
+|**poly-container-mcp**
+|Container runtime operations (Docker, Podman, nerdctl)
+|rescript-docker (WON'T)
+
+|**poly-k8s-mcp**
+|Kubernetes cluster management
+|rescript-k8s (WON'T)
+
+|**poly-cloud-mcp**
+|Multi-cloud provider management (AWS, GCP, Azure)
+|Individual cloud bindings
+|===
+
+NOTE: MCP servers provide LLM tooling, not direct FFI bindings. For programmatic access in ReScript code, use the stack components above. For AI-assisted development workflows, use the MCP servers.
+
 == Related Repos
 
+* https://github.com/hyperpolymath/poly-mcps[poly-mcps] - MCP servers for LLM integration
+* https://github.com/hyperpolymath/rescribe-ssg[rescribe-ssg] - Type-safe static site generator
 * https://github.com/hyperpolymath/git-dispatcher[git-dispatcher] - Development philosophy docs
 * https://github.com/hyperpolymath/rhodium-standard-repositories[RSR] - Repository standards
 

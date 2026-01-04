@@ -118,7 +118,7 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |https://github.com/hyperpolymath/rescript-websocket[GitHub]
 
 |**rescript-redis**
-|Type-safe Redis client with strings, hashes, lists, sets, sorted sets, and pub/sub
+|Type-safe Redis client with Streams, Sentinel, Cluster support plus strings, hashes, lists, sets, sorted sets, and pub/sub
 |✅ Active
 |https://github.com/hyperpolymath/rescript-redis[GitHub]
 
@@ -126,6 +126,16 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Type-safe environment variable access with runtime detection for Deno, Bun, and Node.js
 |✅ Active
 |https://github.com/hyperpolymath/rescript-env[GitHub]
+
+|**rescript-poly-core**
+|Shared foundation library with Result, Async, Logger, Config utilities and MCP server infrastructure
+|✅ Active
+|https://github.com/hyperpolymath/rescript-poly-core[GitHub]
+
+|**create-rescript-poly**
+|CLI scaffolding tool for creating new ReScript projects with the Hyperpolymath stack
+|✅ Active
+|https://github.com/hyperpolymath/create-rescript-poly[GitHub]
 |===
 
 === 🔵 Community Components (Recommended)
@@ -144,30 +154,20 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |✅ Stable
 |https://github.com/rescript-lang/rescript-core[GitHub]
 
-|**rescript-schema**
-|Runtime type validation with excellent ergonomics. _Recommended for all API boundaries._
+|**rescript-schema (Sury)**
+|Runtime type validation with excellent ergonomics. _Recommended for all API boundaries._ Now called "Sury" with Standard Schema support.
 |✅ Stable
 |https://github.com/DZakh/rescript-schema[GitHub]
 
 |**rescript-webapi**
-|Browser Web API bindings
+|Browser Web API bindings. _Includes Fetch API bindings._
 |✅ Stable
 |https://github.com/TheSpyder/rescript-webapi[GitHub]
 
-|**rescript-json**
-|JSON encoding and decoding utilities
+|**rescript-json-combinators**
+|JSON encoding and decoding with combinator pattern
 |✅ Stable
-|https://github.com/glennsl/rescript-json[GitHub]
-
-|**rescript-fetch**
-|Fetch API bindings
-|✅ Stable
-|https://github.com/ryyppy/rescript-fetch[GitHub]
-
-|**rescript-promise**
-|Promise utilities
-|✅ Stable
-|https://github.com/ryyppy/rescript-promise[GitHub]
+|https://github.com/glennsl/rescript-json-combinators[GitHub]
 
 |**rescript-relay**
 |Relay GraphQL client bindings
@@ -293,8 +293,8 @@ deno add jsr:@rescript/core
 # Clone rescript-wasm-runtime for server components
 git clone https://github.com/hyperpolymath/rescript-wasm-runtime
 
-# Template (coming soon)
-deno run -A npm:create-rescript-fullstack my-app
+# Scaffold a new project (API, Web, MCP, or Library)
+deno run -A jsr:@hyperpolymath/create-rescript-poly my-app --api --postgres --redis
 ----
 
 === A Note on Package Managers

@@ -154,15 +154,23 @@ The goal is a coherent ecosystem where:
 |https://github.com/zth/rescript-relay[GitHub]
 |===
 
+=== 🔶 In Development
+
+[cols="2,3,1,2",options="header"]
+|===
+|Component |Description |Status |Link
+
+|**rescript-postgres**
+|Type-safe PostgreSQL client with parameterised queries, connection pooling, and transaction support. ReScript FFI bindings to postgres.js (Porsager).
+|🔶 Planned
+|https://github.com/hyperpolymath/rescript-postgres[GitHub]
+|===
+
 === ⬜ Gaps (Required)
 
 [cols="2,3,1",options="header"]
 |===
 |Component |Requirement |Priority
-
-|**rescript-postgres**
-|Type-safe PostgreSQL client with parameterised queries
-|High
 
 |**rescript-sqlite**
 |Embedded SQLite bindings for local persistence

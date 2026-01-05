@@ -56,6 +56,22 @@ Features::
 * `Session` - Session management
 * `Wasm` - WASM compilation utilities
 
+=== rescript-grpc
+
+Protocol Buffers to ReScript codegen with gRPC-web client stubs.
+
+[horizontal]
+Link:: https://github.com/hyperpolymath/rescript-grpc
+Install:: `protoc --rescript_out=. --rescript_opt=grpc *.proto`
+Features::
+* `protoc-gen-rescript` - Rust protoc plugin for ReScript codegen
+* Type-safe message types from .proto definitions
+* JSON encode/decode codecs (proto3 JSON mapping)
+* gRPC-web client stubs (opt-in via `--rescript_opt=grpc`)
+* Topological sorting for message dependencies
+* Proto3 field semantics (scalars required, messages optional)
+* Polymorphic variants for enum types
+
 == Community (Third-Party)
 
 === Official
@@ -192,7 +208,6 @@ Features::
 
 === Lower Priority
 
-* **rescript-grpc** - gRPC bindings
 * **rescript-tauri** - Tauri 2.0 bindings
 * **rescript-docker** - Docker API
 * **rescript-k8s** - Kubernetes client

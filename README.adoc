@@ -60,8 +60,8 @@ The goal is a coherent ecosystem where:
 ├─────────────────────────────────────────────────────────────────────────┤
 │                            NETWORK/API                                  │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
-│  │rescript-http  │ │rescript-graphql│ │ rescript-ws  │ │ rescript-sse│  │
-│  │(Fetch/Server) │ │    (Client)   │ │  (WebSocket)  │ │   (Events)  │  │
+│  │rescript-http  │ │rescript-graphql│ │ rescript-ws  │ │rescript-grpc│  │
+│  │(Fetch/Server) │ │    (Client)   │ │  (WebSocket)  │ │  (Protobuf) │  │
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                         PERSISTENCE/STORAGE                             │
@@ -146,6 +146,11 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Generate type-safe ReScript clients from OpenAPI specs (Rust CLI with rescript-schema integration)
 |✅ Active
 |https://github.com/hyperpolymath/rescript-openapi[GitHub]
+
+|**rescript-grpc**
+|Protocol Buffers to ReScript codegen with JSON codecs and gRPC-web client stubs (Rust protoc plugin)
+|✅ Active
+|https://github.com/hyperpolymath/rescript-grpc[GitHub]
 |===
 
 === 🔵 Community Components (Recommended)
@@ -221,9 +226,6 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 
 |**rescript-s3**
 |S3-compatible object storage client (AWS, Minio, R2)
-
-|**rescript-grpc**
-|gRPC client and server implementation
 
 |**rescript-sqlite**
 |Embedded SQLite bindings (primarily for Tauri apps)

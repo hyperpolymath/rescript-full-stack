@@ -357,10 +357,17 @@ NOTE: MCP servers provide LLM tooling, not direct FFI bindings. For programmatic
 
 == Related Repos
 
+=== Core Ecosystem
+* https://github.com/hyperpolymath/rescript-runtime-tools[rescript-runtime-tools] - Runtime-aware dev tooling for Deno/Bun
 * https://github.com/hyperpolymath/poly-mcps[poly-mcps] - MCP servers for LLM integration
 * https://github.com/hyperpolymath/rescribe-ssg[rescribe-ssg] - Type-safe static site generator
+
+=== Standards & Philosophy
 * https://github.com/hyperpolymath/git-dispatcher[git-dispatcher] - Development philosophy docs
 * https://github.com/hyperpolymath/rhodium-standard-repositories[RSR] - Repository standards
+
+=== Satellite Tools
+* https://github.com/hyperpolymath/etma-handler[etma-handler] - OU eTMA handler (Java 25 + Jakarta EE)
 
 == Contributing
 

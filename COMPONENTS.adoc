@@ -58,7 +58,7 @@ Features::
 
 === rescript-grpc
 
-Protocol Buffers to ReScript codegen with gRPC-web client stubs.
+Complete Protocol Buffers and gRPC stack for ReScript.
 
 [horizontal]
 Link:: https://github.com/hyperpolymath/rescript-grpc
@@ -71,6 +71,11 @@ Features::
 * Topological sorting for message dependencies
 * Proto3 field semantics (scalars required, messages optional)
 * Polymorphic variants for enum types
+* **OneOf fields** - Variant types with pattern matching
+* **Well-known types** - Timestamp, Duration, Struct, Value, Empty, wrappers
+* **Streaming RPC** - Server, client, and bidirectional streaming (NDJSON)
+* **Server handlers** - Type-safe service interfaces with grpcStatus, context, streamWriter
+* **WASM codec** - Rust-based binary protobuf encoder/decoder
 
 == Community (Third-Party)
 

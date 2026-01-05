@@ -148,7 +148,7 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |https://github.com/hyperpolymath/rescript-openapi[GitHub]
 
 |**rescript-grpc**
-|Protocol Buffers to ReScript codegen with JSON codecs and gRPC-web client stubs (Rust protoc plugin)
+|Complete gRPC stack: protobuf codegen, JSON/binary codecs, streaming RPC, server handlers, OneOf/well-known types
 |✅ Active
 |https://github.com/hyperpolymath/rescript-grpc[GitHub]
 |===

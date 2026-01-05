@@ -136,6 +136,11 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |CLI scaffolding tool for creating new ReScript projects with the Hyperpolymath stack
 |✅ Active
 |https://github.com/hyperpolymath/create-rescript-poly[GitHub]
+
+|**rescript-openapi**
+|Generate type-safe ReScript clients from OpenAPI specs (Rust CLI with rescript-schema integration)
+|✅ Active
+|https://github.com/hyperpolymath/rescript-openapi[GitHub]
 |===
 
 === 🔵 Community Components (Recommended)
@@ -217,9 +222,6 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 
 |**rescript-sqlite**
 |Embedded SQLite bindings (primarily for Tauri apps)
-
-|**rescript-openapi**
-|Generate ReScript clients from OpenAPI specifications
 |===
 
 == ABI/FFI Strategy

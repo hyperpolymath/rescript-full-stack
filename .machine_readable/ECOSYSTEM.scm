@@ -51,6 +51,13 @@
       (status "in-development")
       (url "https://github.com/hyperpolymath/rescript-postgres"))
 
+    (rescript-openapi
+      (relationship "sibling-component")
+      (purpose "Generate ReScript clients from OpenAPI specs")
+      (status "active")
+      (language "rust")
+      (url "https://github.com/hyperpolymath/rescript-openapi"))
+
     ;; Community components
     (rescript-core
       (relationship "dependency")

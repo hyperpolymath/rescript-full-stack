@@ -47,10 +47,10 @@ The goal is a coherent ecosystem where:
 │  └───────────────┘ └───────────────┘ └───────────────┘ └─────────────┘  │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                              RUNTIME                                    │
-│  ┌───────────────────────────────────────────────────────────────────┐  │
-│  │                     rescript-wasm-runtime                         │  │
-│  │   Deno/Bun bindings • SharedMemory • DAG analysis • HTTP server   │  │
-│  └───────────────────────────────────────────────────────────────────┘  │
+│  ┌─────────────────────────────┐ ┌─────────────────────────────────────┐│
+│  │   rescript-wasm-runtime     │ │     rescript-runtime-tools          ││
+│  │ Deno/Bun • SharedMem • DAG  │ │  dev/build/test CLI • zero npm      ││
+│  └─────────────────────────────┘ └─────────────────────────────────────┘│
 ├─────────────────────────────────────────────────────────────────────────┤
 │                           COMPUTE (WASM)                                │
 │  ┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌─────────────┐  │
@@ -96,6 +96,11 @@ NOTE: Infrastructure bindings (Docker, Kubernetes, Terraform) are intentionally 
 |Deno/Bun runtime with SharedMemory zero-copy transfer and DAG dependency analysis
 |✅ Active
 |https://github.com/hyperpolymath/rescript-wasm-runtime[GitHub]
+
+|**rescript-runtime-tools**
+|Runtime-aware build/dev tooling for Deno/Bun with zero npm (uses Deno npm: specifier)
+|✅ Active
+|https://github.com/hyperpolymath/rescript-runtime-tools[GitHub]
 
 |**rescribe-ssg**
 |Type-safe static site generator in ReScript with ML-family type inference and npm compatibility

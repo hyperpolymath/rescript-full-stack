@@ -5,7 +5,6 @@
 # Required files (must_have)
 must_have:
   - README.adoc
-  - LICENSE-AGPL
   - LICENSE-PALIMPSEST
   - Justfile
   - Mustfile

@@ -1,6 +1,6 @@
 # Mustfile
 # Contract of Physical State for Hyperpolymath Projects
-# AGPL-3.0 Palimpsest
+# Palimpsest-MPL 1.0
 
 # Required files (must_have)
 must_have:
@@ -22,7 +22,7 @@ must_not_have:
 requirements:
   content:
     - file: README.adoc
-      contains: "AGPL-3.0 Palimpsest"
+      contains: "Palimpsest-MPL 1.0"
     - file: justfile
       contains: "update: update-coverage update-readme"
 

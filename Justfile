@@ -1,39 +1,99 @@
 # justfile for ReScript Ecosystem Map
-# Usage: `just update-readme` or `just update-coverage`
+# Usage: `just update` (runs all updates), or target specific tasks.
 
-# Update README.adoc with latest component statuses
-update-readme:
-    # Sync coverage table from docs/COVERAGE.adoc
-    sed -i '/== Coverage Status/,/^$$/ { /== Coverage Status/{p; r docs/COVERAGE.adoc'; 'd; } }' README.adoc
-    # Verify all links (requires `ack` or `grep`)
-    ack --adoc 'link:' README.adoc | grep -v 'licences\|CONTRIBUTING' || echo "✅ All links validated"
-    # Check for broken tables
-    just --fmt check
+# --- Core Workflow ---
+update: update-coverage update-readme lint gen-diagrams
+    git add README.adoc docs/COVERAGE.adoc docs/*.svg
+    git commit -m "chore: update docs and diagrams [skip ci]" || true
 
-# Update docs/COVERAGE.adoc from source (e.g., GitHub API or local repos)
+# --- Coverage Management ---
+# Generate docs/COVERAGE.adoc from GitHub API (or local repos)
 update-coverage:
-    # Example: Fetch statuses from GitHub (replace with your script)
-    ./scripts/fetch-component-statuses.sh > docs/COVERAGE.adoc
-    # Format the table
-    just --fmt coverage-table
+    # Fetch statuses from GitHub (replace with your logic)
+    ./scripts/fetch_github_statuses.rb > docs/COVERAGE.adoc.tmp
+    # Format the table (ensure consistent columns)
+    just --fmt-coverage
+    mv docs/COVERAGE.adoc.tmp docs/COVERAGE.adoc
 
-# Format the coverage table (ensure consistent columns)
-fmt-coverage-table:
-    column -t -s $'\t' docs/COVERAGE.adoc > docs/COVERAGE.adoc.tmp && mv docs/COVERAGE.adoc.tmp docs/COVERAGE.adoc
+fmt-coverage:
+    column -t -s $'\t' docs/COVERAGE.adoc > docs/COVERAGE.adoc.tmp && \
+    mv docs/COVERAGE.adoc.tmp docs/COVERAGE.adoc
 
-# Lint all AsciiDoc files
-lint:
-    asciidoctor-lint README.adoc docs/*.adoc
+# --- README Management ---
+update-readme:
+    # Sync coverage table into README.adoc
+    sed -i '/== Coverage Status/,/^$$/ { /== Coverage Status/{p; r docs/COVERAGE.adoc'; 'd; } }' README.adoc
+    # Validate links and tables
+    just --lint-readme
 
-# Generate diagrams (if using plantuml)
+lint-readme:
+    ack --adoc 'link:' README.adoc | grep -v 'licences\|CONTRIBUTING' || echo "✅ All links validated"
+    asciidoctor-lint README.adoc
+
+# --- Diagram Generation ---
 gen-diagrams:
+    # Generate SVG diagrams from PlantUML sources
     plantuml -tsvg diagrams/*.puml && mv diagrams/*.svg docs/
 
-# Full update workflow
-update-all: update-coverage update-readme lint gen-diagrams
-    git add README.adoc docs/COVERAGE.adoc docs/*.svg
-    git commit -m "chore: update coverage and diagrams [skip ci]" || true
+# --- Helper Recipes ---
+# Generate a new coverage template (if needed)
+gen-coverage-template:
+    cat > docs/COVERAGE.adoc << 'EOF'
+= Component Coverage Status
+:toc:
 
-# Helper: Check for outdated components
-audit:
-    grep -E "⚠️|⬜" docs/COVERAGE.adoc || echo "✅ No legacy/gaps found"
+== ✅ Hyperpolymath Components (Ours)
+[cols="1,2,1,1",options="header"]
+|===
+| Component          | Description                          | Status      | Link
+| rescript-tea       | TEA (Elm Architecture) with layout   | ✅ Active    | link:https://github.com/hyperpolymath/rescript-tea[GitHub]
+|===
+
+== 🔵 Community Components (Recommended)
+[cols="1,2,1,1",options="header"]
+|===
+| Component          | Description                          | Status      | Link
+| @rescript/react    | Official React bindings              | ✅ Stable    | link:https://github.com/rescript-lang/rescript-react[GitHub]
+|===
+
+== ⚠️ Legacy (Not Recommended)
+[cols="1,2,1",options="header"]
+|===
+| Component          | Issue                                | Alternative
+| rescript-nodejs    | Lacks Deno’s security model          | Migrate to `rescript-wasm-runtime`
+|===
+
+== ⬜ Gaps (Prioritised)
+[cols="1,2",options="header"]
+|===
+| Component          | Requirement
+| rescript-tauri     | Tauri 2.0 bindings for mobile/desktop
+|===
+EOF
+
+# --- PlantUML Management ---
+# Generate a new diagram template
+gen-diagram-template:
+    cat > diagrams/stack.puml << 'EOF'
+@startuml
+skinparam monochrome true
+rectangle "PRESENTATION" {
+  [rescript-tea] (TEA/Elm)
+  [rescript-jsx] (JSX)
+}
+@enduml
+EOF
+
+# --- CI/CD Integration ---
+# Reject failing scripts (GitLab CI/CD)
+ci-check:
+    if ! just update; then
+        echo "ERROR: Documentation update failed. Check logs."
+        exit 1
+    fi
+
+# --- Utility ---
+# Clean up temporary files
+clean:
+    rm -f docs/*.tmp
+EOF
